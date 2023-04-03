@@ -1,0 +1,11 @@
+#clock-container{
+  margin:30px 20px;
+  border:7px solid #13353a;
+  border-radius:50px;
+}
+
+#buttons{
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+}
