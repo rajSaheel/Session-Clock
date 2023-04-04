@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { playPause, reset, changeType } from "../../store/clock.js"
 
 export const ClockComponent = () => {
-
+  const global = {}
   const audio = new Audio("https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav")
   const state = useSelector(state => state)
   const dispatch = useDispatch()
@@ -14,45 +14,40 @@ export const ClockComponent = () => {
   const [mm, setMM] = useState(0)
   const [ss, setSS] = useState(0)
 
-  const handlePlayPause = async () => {
-    await dispatch(playPause())
-    countDown(mm,ss)
-    console.log(state.Clock.running)
-  }
-
-  const countDown = (min, sec) => {
-    const timeReducer = setInterval(() => {
-      if (state.Clock.running) clearInterval(timeReducer)
-      if (min == 0 && sec == 0) {
-        dispatch(changeType())
-        setMM(state[state.Clock.type].length)
-        min = mm
-        sec = 0
-        setSS(sec)
-        audio.play()
-      }
-      else if (sec == 0) {
-        sec = 59
-        min -= 1
-        setMM(min)
-        setSS(sec)
-      }
-      else {
-        sec -= 1
-        setSS(sec)
-      }
-    }, 1000)
+  const handlePlayPause = () => {
+    dispatch(playPause())
   }
 
   const handleReset = () => {
     dispatch(reset())
+    setMM(state[state.Clock.type].length)
     setSS(0)
   }
-
 
   useEffect(() => {
     setMM(state[state.Clock.type].length)
   }, [state.Break.length, state.Session.length])
+
+  useEffect(() => {
+    if(state.Clock.running) {
+      var timeReducer = setTimeout(() => {
+      if (mm == 0 && ss == 0) {
+        dispatch(changeType())
+        setMM(state[state.Clock.type].length)
+        setSS(0)
+        audio.play()
+      }
+      else if (ss == 0) {
+        setMM(mm-1)
+        setSS(59)
+      }
+      else {
+        setSS(ss-1)
+      }
+    }, 1000)
+      return ()=> clearTimeout(timeReducer)
+    }
+  })
 
   return (
     <div >
@@ -61,7 +56,7 @@ export const ClockComponent = () => {
         <h1 id="time-left">{(mm <= 9) ? "0" + mm : mm}:{(ss <= 9) ? "0" + ss : ss}</h1>
       </div>
       <div id="buttons">
-        <span id="start_stop" className={"clickables"} onClick={handlePlayPause}> Play </span>
+        <span id="start_stop" className={"clickables"} onClick={handlePlayPause}>{state.Clock.running ? "Pause" : "Play"} </span>
         <span id="reset" onClick={handleReset} className={"clickables"}> Reset </span>
       </div>
     </div>
