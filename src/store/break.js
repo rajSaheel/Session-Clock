@@ -21,12 +21,6 @@ export const resetBreak = () => {
   }
 }
 
-export const changeLength = (len) => {
-  return {
-    type: CHANGE_LEGNTH,
-    len
-  }
-}
 
 const defaultState = {
   length: 5
