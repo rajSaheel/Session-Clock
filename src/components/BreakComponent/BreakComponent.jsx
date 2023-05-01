@@ -15,7 +15,7 @@ export const BreakComponent = () => {
       <div id="properties">
         <span id="break-decrement" className={"clickables"} onClick={() => (state.Clock.running) ? "" : dispatch(decrementBreak())}> - </span>
         <span id="break-length">{Break.length}</span>
-        <span id="break-decrement" onClick={() => (state.Clock.running) ? "" : dispatch(incrementBreak())} className={"clickables"}> + </span>
+        <span id="break-decrement" onClick={() => (state.Clock.running) ? null : dispatch(incrementBreak())} className={"clickables"}> + </span>
       </div>
     </div>
   )

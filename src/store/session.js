@@ -31,6 +31,7 @@ export const Session = (state = defaultState, action) => {
     case DECREMENT_SESSION: return { length: state.length === 1 ? state.length : state.length - 1 }
       break
     case RESET: return Object.assign({}, defaultState)
+      break
     default: return state;
   }
 }

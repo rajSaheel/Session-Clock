@@ -12,9 +12,9 @@ export const SessionComponent = () => {
     <div>
       <h3 id="session-label">Session Length</h3>
       <div id="properties">
-        <span id="session-decrement" onClick={() => (state.Clock.running) ? "" : dispatch(decrementSession())} className={"clickables"}> - </span>
+        <span id="session-decrement" onClick={() => (state.Clock.running) ? null : dispatch(decrementSession())} className={"clickables"}> - </span>
         <span id="session-length">{Session.length}</span>
-        <span id="session-decrement" onClick={() => (state.Clock.running) ? "" : dispatch(incrementSession())} className={"clickables"}> + </span>
+        <span id="session-decrement" onClick={() => (state.Clock.running) ? null : dispatch(incrementSession())} className={"clickables"}> + </span>
       </div>
     </div>
   )
